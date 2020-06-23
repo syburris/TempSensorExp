@@ -14,6 +14,7 @@ namespace TempSensorExp
         private static System.Timers.Timer aTimer;
         public static string beginURL = "http://localhost:22002/NeuLogAPI?StartExperiment:[Temperature],[1],[{0}],[{1}]";
         public static string stopURL = "http://localhost:22002/NeuLogAPI?StopExperiment";
+        public static string getSamples = "http://localhost:22002/NeuLogAPI?GetExperimentSamples:";
         static void Main(string[] args)
         {
             //end any experiments if they're already running
@@ -24,6 +25,8 @@ namespace TempSensorExp
             string input = Console.ReadLine();
             if (input == "y")
             {
+                //rate = 11 -- this is equal to 1 sample per second
+                //samples = 100, the experiment will run for 100 seconds or until ended by user
                 StartExperitment(11, 100);
             }
             else
@@ -39,6 +42,7 @@ namespace TempSensorExp
             {
                 Console.WriteLine("You have chosen to end the experiment.");
                 StopExperiment();
+                GetSamples();
             }
             else
             {
@@ -48,6 +52,7 @@ namespace TempSensorExp
             
         }
 
+        
         //method to begin the experiment, rate = sample rate/second and samples =
         // total number of samples taken
         private static void StartExperitment(int rate, int samples)
@@ -79,10 +84,8 @@ namespace TempSensorExp
                 {
                     Console.WriteLine("An error occurred connecting to the temperature sensor.");
                 }
-                
-                
             }
-
+            
         }
 
         private static void StopExperiment()
@@ -106,8 +109,23 @@ namespace TempSensorExp
                 {
                     Console.WriteLine("An error occurred while trying to end the experiment.");
                 }
+            }
+        }
 
+        private static void GetSamples()
+        {
+            //initiate the request
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(getSamples);
+            request.ContentType = "application/json; charset=utf-8";
 
+            //capture the response
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (Stream responseStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(responseStream, Encoding.UTF8);
+                string json = reader.ReadToEnd();
+                //TheSamples samples = JsonConvert.DeserializeObject<TheSamples>(json);
+                Console.WriteLine(json);
             }
         }
     }
