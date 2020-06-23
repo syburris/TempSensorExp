@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +9,7 @@ namespace TempSensorExp
     {
         public string name { get; set; }
 
-        public int id { get; set; }
+        public string id { get; set; }
 
         public double[] temp { get; set; }
 

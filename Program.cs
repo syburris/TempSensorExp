@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -136,6 +138,11 @@ namespace TempSensorExp
                 string json = reader.ReadToEnd();
                 //TheSamples samples = JsonConvert.DeserializeObject<TheSamples>(json);
                 Console.WriteLine(json);
+                TheSamples contents = JsonConvert.DeserializeObject<TheSamples>(json);
+                Sensor sensor = new Sensor();
+                sensor.name = contents[0].ToString();
+                sensor.id = contents[1].ToString();
+                Console.WriteLine("This is a " + sensor.name.ToString() + " sensor. The sensor's ID is:" + sensor.id.ToString() + ".");
             }
         }
     }
