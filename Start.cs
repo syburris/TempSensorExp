@@ -8,7 +8,7 @@ namespace TempSensorExp
     //class to capture the StartExperiemtn JSON response
     class Start
     {
-        public string StartExperiment { get; set; }
+        public bool StartExperiment { get; set; }
 
         public Start()
         {
