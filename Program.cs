@@ -35,6 +35,16 @@ namespace TempSensorExp
                 Environment.Exit(0);
             }
             Console.WriteLine("The experiment is running...");
+
+            //let's see if we can view the samples
+            Console.WriteLine("View the samples so far?");
+            Console.WriteLine("y/n");
+            string readline = Console.ReadLine();
+            if (readline == "y")
+            {
+                GetSamples();
+            }
+            
             Console.WriteLine("Would you like to end the experiment?");
             Console.WriteLine("y/n");
             string exit = Console.ReadLine();
